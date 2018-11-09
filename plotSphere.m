@@ -1,19 +1,19 @@
 % plot spherical field
 % 
-% [f,s] = plotSphere(field,plotmode,plotpart,option)
+% [f,s] = plotSphere(field,plotpart,plotmode,option)
 % 
-% [f,s] = figure handle and surf handle
+% f = figure handle
+% s = surf handle OR structure of surf handles (in case of PLOTPART = 'all')
 % 
 % field(theta,phi) = [2d array]
 % 
-% PLOTPART_DEFAULT = 'abs';
-% PLOTMODE_DEFAULT = 'orbit';
-% OPTION_DEFAULT   = 'none';
+% PLOTPART_LIST = {'abs'(default), 'real', 'imag', 'all'}
+% PLOTMODE_LIST = {'orbit'(default), 'sphere'}
+% OPTION_LIST   = {'none'(default, 'gridoff'}
 % 
-% PLOTPART_LIST = {'abs', 'real', 'imag', 'all'};
-% PLOTMODE_LIST = {'orbit', 'sphere'};
-% OPTION_LIST   = {'none', 'gridOff'};
+% if Input Argument = [], set the default. 
 % 
+% Nagayama Daisuke, 2018
 
 function [f,s] = plotSphere(field,plotpart,plotmode,option)
 PLOTPART_DEFAULT = 'abs';
@@ -22,7 +22,7 @@ OPTION_DEFAULT   = 'none';
 
 PLOTPART_LIST = {'abs', 'real', 'imag', 'all'};
 PLOTMODE_LIST = {'orbit', 'sphere'};
-OPTION_LIST   = {'none', 'gridOff'};
+OPTION_LIST   = {'none', 'gridoff'};
 
 if (nargin<2 || isempty(plotpart)); plotpart = PLOTPART_DEFAULT; end
 if (nargin<3 || isempty(plotmode)); plotmode = PLOTMODE_DEFAULT; end
@@ -34,7 +34,7 @@ if not(any(strcmp(option,  OPTION_LIST)));   option   = OPTION_DEFAULT;   disp('
 
 if strcmp(plotpart,'real'); field = real(field); end
 if strcmp(plotpart,'imag'); field = imag(field); end
-if strcmp(plotpart,'all');  plotSphereAll(field,plotmode,option); return;  end
+if strcmp(plotpart,'all'); [f,s] = plotSphereAll(field,plotmode,option); return;  end
 
 FLAG_COMPLEX = not(isreal(field));
 
@@ -78,7 +78,7 @@ scale = max(max(amplitude));
 f=figure;
     s = surf(x,y,z,C); 
     if strcmp(plotmode,'orbit'); s.AlphaData = alpha; s.FaceAlpha = 'flat'; end
-    if strcmp(option,'gridOff'); s.EdgeColor = 'none'; end
+    if strcmp(option,'gridoff'); s.EdgeColor = 'none'; end
     colormap(myColormap)
     light
     lighting gouraud

@@ -5,9 +5,9 @@ if mod(N,4)~=0; N = 256; disp('error(colormap4complexSH): N is multiple of 4.');
 
 sl = N/4; % section length
 
-%   0             pi/2ã€€   ã€€ ã€€ã€€ã€€pi          3pi/2          2pi      
+%   0             pi/2@   @ @@@pi          3pi/2          2pi      
 %  Blue           Green            Red         Yelow          Blue                  
-% [0,13,255] ã€œ [13,255,0] ã€œ [255,0,13] ã€œ [255,241,0] ã€œ [0,13,255]
+% [0,13,255] ` [13,255,0] ` [255,0,13] ` [255,241,0] ` [0,13,255]
 %   0              64             128           192           256
 scaleR = [linspace(  0, 13,sl+1)',linspace( 13,255,sl+1)',linspace(255,255,sl+1)',linspace(255,  0,sl+1)'];
 scaleG = [linspace( 13,255,sl+1)',linspace(255,  0,sl+1)',linspace(  0,241,sl+1)',linspace(241, 13,sl+1)'];
@@ -15,7 +15,7 @@ scaleB = [linspace(255,  0,sl+1)',linspace(  0, 13,sl+1)',linspace( 13,  0,sl+1)
 % scaleR = reshape(scaleR(1:sl,:),:,1);
 % scaleG = reshape(scaleG(1:sl,:),:,1);
 % scaleB = reshape(scaleB(1:sl,:),:,1);
-% reshape ãŒåŠ¹ã‹ãªã„ã®ã§å¿œæ€¥å‡¦ç½®
+% reshape ‚ªŒø‚©‚È‚¢‚Ì‚Å‰‹}ˆ’u
     scaleR = scaleR(1:sl,:);
     scaleR = [scaleR(:,1);scaleR(:,2);scaleR(:,3);scaleR(:,4)];
     scaleG = scaleG(1:sl,:);

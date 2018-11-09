@@ -1,24 +1,28 @@
 % plot spherical field with real part and imaginary part
 % 
-% f = plotSphereAll(field,plotmode,option)
+% [f,s] = plotSphereAll(field,plotmode,option)
 % 
 % f = figure handle
+% s = structure of surf handles
+%       s.abs: abs part surf
+%       s.real: real part surf
+%       s.imag: imag part surf
 % 
 % field(theta,phi) = [2d array]
 % 
-% PLOTMODE_DEFAULT = 'orbit';
-% OPTION_DEFAULT   = 'none';
+% PLOTMODE_LIST = {'orbit'(default), 'sphere'};
+% OPTION_LIST   = {'none'(default), 'gridoff'};
 % 
-% PLOTMODE_LIST = {'orbit', 'sphere'};
-% OPTION_LIST   = {'none', 'gridOff'};
+% % if Input Argument = [], set the default. 
 % 
+% Nagayama Daisuke, 2018
 
-function f = plotSphereAll(field,plotmode,option)
+function [f,s] = plotSphereAll(field,plotmode,option)
 PLOTMODE_DEFAULT = 'orbit';
 OPTION_DEFAULT   = 'none';
 
 PLOTMODE_LIST = {'orbit', 'sphere'};
-OPTION_LIST   = {'none', 'gridOff'};
+OPTION_LIST   = {'none', 'gridoff'};
 
 if (nargin<2 || isempty(plotmode)); plotmode = PLOTMODE_DEFAULT; end
 if (nargin<3 || isempty(option));   option   = OPTION_DEFAULT; end
@@ -61,7 +65,7 @@ f=figure; axis off; hold on;
     axes('position',[0.0500 0 0.2666 1]); 
     s1 = surf(Xm,Ym,Zm,Cm);
     if strcmp(plotmode,'orbit'); s1.AlphaData = alpha_m; s1.FaceAlpha = 'flat'; end
-    if strcmp(option,'gridOff'); s1.EdgeColor = 'none'; end
+    if strcmp(option,'gridoff'); s1.EdgeColor = 'none'; end
     axis equal off; %rot3d;
     colormap(gca,myColormap4Complex);
     light; lighting phong; camzoom(1.3);
@@ -69,7 +73,7 @@ f=figure; axis off; hold on;
     axes('position',[0.3666 0 0.2666 1]); 
     s2 = surf(Xr,Yr,Zr,Cr);
     if strcmp(plotmode,'orbit'); s2.AlphaData = alpha_r; s2.FaceAlpha = 'flat'; end
-    if strcmp(option,'gridOff'); s2.EdgeColor = 'none'; end
+    if strcmp(option,'gridoff'); s2.EdgeColor = 'none'; end
     axis equal off; %rot3d;
     colormap(gca,myColormap4real);
     light; lighting phong; camzoom(1.3);
@@ -77,10 +81,19 @@ f=figure; axis off; hold on;
     axes('position',[0.6833 0 0.2666 1]); 
     s3 = surf(Xi,Yi,Zi,Ci);
     if strcmp(plotmode,'orbit'); s3.AlphaData = alpha_i; s3.FaceAlpha = 'flat'; end
-    if strcmp(option,'gridOff'); s3.EdgeColor = 'none'; end
+    if strcmp(option,'gridoff'); s3.EdgeColor = 'none'; end
     axis equal off; %rot3d;
     colormap(gca,myColormap4imag)
     light; lighting phong; camzoom(1.3);
 
     setfig
+
+s(1:3) = struct('surf_handle',NaN);
+s(1).surf_handle = s1;
+s(2).surf_handle = s2;
+s(3).surf_handle = s3;
+
 end
+
+
+

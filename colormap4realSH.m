@@ -5,9 +5,9 @@ if mod(N,2)~=0; N = 256; disp('error(colormap4complexSH): N is an even number.')
 
 sl = N/2; % section length
 
-%   -             0„ÄÄ   „ÄÄ „ÄÄ „ÄÄ„ÄÄ„ÄÄ+
+%   -             0Å@   Å@ Å@ Å@Å@Å@+
 %  Blue          Glay             Red
-% [0,13,255] „Äú [128,128,128] „Äú [255,0,13]
+% [0,13,255] Å` [128,128,128] Å` [255,0,13]
 scaleR = [linspace(  0,128,sl),linspace(128,255,sl)]';
 scaleG = [linspace( 13,128,sl),linspace(128,  0,sl)]';
 scaleB = [linspace(255,128,sl),linspace(128, 13,sl)]';
