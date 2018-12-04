@@ -29,11 +29,10 @@ function [Ymn,THETA,PHI,Xm,Ym,Zm]=spharm(L,M,RES,PLOT_FLAG)
 if nargin==0
   L=3;   % DEGREE
   M=2;   % ORDER
-  RES=[55 55];
 end
 
 if nargin<3
-  RES=[25 25];  
+  RES=[55 55];  
   PLOT_FLAG=1;
 end
 

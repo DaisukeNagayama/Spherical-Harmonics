@@ -1,4 +1,4 @@
-%% ƒVƒ“ƒ{ƒŠƒbƒN‚Å‹…–Ê’²˜aŠÖ”
+%% ã‚·ãƒ³ãƒœãƒªãƒƒã‚¯ã§çƒé¢èª¿å’Œé–¢æ•°
 % 
 
 syms x
@@ -10,28 +10,28 @@ assume(phi >= 0 & phi <= 2*pi)
 % assume(in(l,'integer') & l >= 0)
 % assume(in(m,'integer') )% & m >= -l & m <= l)
 
-%% l,m ‚ÌŽw’è
+%% l,m ã®æŒ‡å®š
 l = 2;
 m = 2;
 
 
-%% ‹…–Ê’²˜aŠÖ”‚ÌŒvŽZ
-% ƒ‹ƒWƒƒƒ“ƒhƒ‹”†ŠÖ” Plm = legendre(l, cos(theta));
+%% çƒé¢èª¿å’Œé–¢æ•°ã®è¨ˆç®—
+% ãƒ«ã‚¸ãƒ£ãƒ³ãƒ‰ãƒ«é™ªé–¢æ•° Plm = legendre(l, cos(theta));
 syms Pl(x) Plm(x)
 Pl(x) = 1/(2^l*factorial(l)) * diff(((x^2 - 1)^l), x, l);
 Plm(x) = (-1)^abs(m) * (1-x^2)^(abs(m)/2) * diff(Pl(x),x, abs(m));
 
-% •„†‚ÆŒW”
+% ç¬¦å·ã¨ä¿‚æ•°
 sign = (-1)^((m+abs(m))/2);
 normSH = sqrt( 4*pi / (2*l+1) * factorial(l+abs(m)) / factorial(l-abs(m)) );
 
-% •¡‘f” ‹…–Ê’²˜aŠÖ”
+% è¤‡ç´ æ•° çƒé¢èª¿å’Œé–¢æ•°
 Ylm = sign/normSH * Plm(cos(theta)) .* exp(1i * m * phi);
 
 % 
 Blm = 1/sqrt(l(l+1)) * (diff(
 
-%% ‹…–ÊÏ•ª‚Å“àÏŒvŽZ
+%% çƒé¢ç©åˆ†ã§å†…ç©è¨ˆç®—
 yy = int(int( ...
         Ylm * conj(Ylm) * sin(theta), ...
     phi, 0, 2*pi), ... 
@@ -45,12 +45,12 @@ function C = calcC(n,l,p,m)
 % C(l,p,m,n)
 C = zeros(length(l), length(p), length(m), abs(n)+1);
 
-% n = 0 ‚Ì‚Æ‚«
+% n = 0 ã®ã¨ã
 for jl = l
     C(jl -abs(n)+1, jl +1, :, 0 +1) = 1;
 end
 
-% n ‚ª 1ˆÈã‚Ì‚Æ‚«‚ð‡‚ÉŒvŽZ
+% n ãŒ 1ä»¥ä¸Šã®ã¨ãã‚’é †ã«è¨ˆç®—
 for jn = 0:n-1
     for jl = l
     for jm = m

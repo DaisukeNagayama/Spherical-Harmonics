@@ -5,7 +5,7 @@ if mod(N,2)~=0; N = 256; disp('error(colormap4complexSH): N is an even number.')
 
 sl = N/2; % section length
 
-%   -             0　   　 　 　　　+
+%   -             0                 +
 %  Green         Glay            Yelow
 % [13,255,0] ～ [128,128,128] ～ [255,241,0]
 scaleR = [linspace( 13,128,sl),linspace(128,255,sl)]';

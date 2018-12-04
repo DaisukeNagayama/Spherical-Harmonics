@@ -4,33 +4,33 @@
 
 %%
 function [wt,wp] = VSHsample()
-%% “ü—Í
-% order,degree ‚ðŽw’è (1 =< order, |degree| =< order)
+%% å…¥åŠ›
+% order,degree ã‚’æŒ‡å®š (1 =< order, |degree| =< order)
 B_OD = [2,-1; 8,3];   % [order1, degree1; order2, degree2; ...]
 B_COEF = [1,1];   % [coef1, coef2, ...]
 C_OD = [3,-3];   % [order1, degree1; order2, degree2; ...]
 C_COEF = [0];   % [coef1, coef2, ...]
 
 
-%% ‹…–ÊƒOƒŠƒbƒh‚Ì—pˆÓ
-polarNum = 41;    % theta, mu   ˆÜ“x‚Ì‚Ý”
-azimuthNum = 41;  % phi, lambda Œo“x‚Ì‚Ý”
+%% çƒé¢ã‚°ãƒªãƒƒãƒ‰ã®ç”¨æ„
+polarNum = 41;    % theta, mu   ç·¯åº¦ã®åˆ»ã¿æ•°
+azimuthNum = 41;  % phi, lambda çµŒåº¦ã®åˆ»ã¿æ•°
 
-% ’Êí‚ÌˆÜ“xŒo“x
+% é€šå¸¸ã®ç·¯åº¦çµŒåº¦
 theta_ = 0 : pi/(polarNum - 1) : pi;
 phi_ = 0 : 2*pi/(azimuthNum - 1) : 2*pi;
 [phi,theta] = meshgrid(phi_,theta_);
 
-% ƒKƒEƒXˆÜ“xƒÊ‚ÆŒo“xƒÉ‚ÌŒvŽZ
+% ã‚¬ã‚¦ã‚¹ç·¯åº¦Î¼ã¨çµŒåº¦Î»ã®è¨ˆç®—
 syms X;
-LegPolynomial = legendreP(polarNum, X); % polarNumŽŸ‚Ìƒ‹ƒWƒƒƒ“ƒhƒ‹‘½€Ž®
-mu_ = vpasolve(LegPolynomial == 0);      % ƒ‹ƒWƒƒƒ“ƒhƒ‹‘½€Ž®‚Ìª‚ªƒKƒEƒXˆÜ“x‚É‚È‚é
-mu_ = fliplr(double(mu_)');                        % ƒVƒ“ƒ{ƒŠƒbƒN‚©‚ç”{¸“x”‚Ö•ÏŠ·
+LegPolynomial = legendreP(polarNum, X); % polarNumæ¬¡ã®ãƒ«ã‚¸ãƒ£ãƒ³ãƒ‰ãƒ«å¤šé …å¼
+mu_ = vpasolve(LegPolynomial == 0);      % ãƒ«ã‚¸ãƒ£ãƒ³ãƒ‰ãƒ«å¤šé …å¼ã®æ ¹ãŒã‚¬ã‚¦ã‚¹ç·¯åº¦ã«ãªã‚‹
+mu_ = fliplr(double(mu_)');                        % ã‚·ãƒ³ãƒœãƒªãƒƒã‚¯ã‹ã‚‰å€ç²¾åº¦æ•°ã¸å¤‰æ›
 lambda_ = 0 : 2*pi / (azimuthNum - 1) : 2*pi;
 [lambda,mu] = meshgrid(lambda_,mu_);
 
 
-%% VSHBP ‚Ì–{‘Ì
+%% VSHBP ã®æœ¬ä½“
 wt_prov = zeros(polarNum,azimuthNum);
 wp_prov = zeros(polarNum,azimuthNum);
 
@@ -55,7 +55,7 @@ for j = 1:size(B_OD,1)      % Blm
     Blm_t = A * dtYlmW;
     Blm_p = A * 1i * degree * Ylm./(sin(acos(mu)) + eps);
     
-    % ‘«‚µ‡‚í‚¹‚Ä‚¢‚­
+    % è¶³ã—åˆã‚ã›ã¦ã„ã
     wt_prov = wt_prov + B_COEF(j) * Blm_t;
     wp_prov = wp_prov + B_COEF(j) * Blm_p;
 end
@@ -85,7 +85,7 @@ for j = 1:size(C_OD,1)      % Clm
     Clm_t = Blm_p;
     Clm_p = -Blm_t;
     
-    % ‘«‚µ‡‚í‚¹‚Ä‚¢‚­
+    % è¶³ã—åˆã‚ã›ã¦ã„ã
     wt_prov = wt_prov + C_COEF(j) * Clm_t;
     wp_prov = wp_prov + C_COEF(j) * Clm_p;
 end
@@ -93,22 +93,22 @@ end
 wt = wt_prov;
 wp = wp_prov;
 
-% Ä\¬‰æ‘œ‚ðƒKƒEƒXˆÜ“x‚©‚çˆê”ÊˆÜ“x‚É•ÏŠ·‚·‚é
+% å†æ§‹æˆç”»åƒã‚’ã‚¬ã‚¦ã‚¹ç·¯åº¦ã‹ã‚‰ä¸€èˆ¬ç·¯åº¦ã«å¤‰æ›ã™ã‚‹
 wt = spline(acos(mu(:,1)), wt', theta(:,1))';
 wp = spline(acos(mu(:,1)), wp', theta(:,1))';
 
 
-return  % ˆÈ‰ºAplot•¶
-%% ƒvƒƒbƒg
+return  % ä»¥ä¸‹ã€plotæ–‡
+%% ãƒ—ãƒ­ãƒƒãƒˆ
 wtMax = max(max(abs(wt))); wpMax = max(max(abs(wp)));
 wtR = real(wt)/wtMax; wpR = real(wp)/wpMax;
 wtI = imag(wt)/wtMax; wpI = imag(wp)/wpMax;
 
-%% ‹…–ÊƒxƒNƒgƒ‹ê ‚Ì‰ÂŽ‹‰»
+%% çƒé¢ãƒ™ã‚¯ãƒˆãƒ«å ´ ã®å¯è¦–åŒ–
 
 figure
 quiver(1:azimuthNum,1:polarNum,wtR,wpR)
-xlabel('ƒÓ'),ylabel('ƒÆ')
+xlabel('Ï†'),ylabel('Î¸')
 axis tight
 ax = gca;
 ax.XTick = 1:(azimuthNum-1)/8:azimuthNum;
@@ -118,7 +118,7 @@ ax.YTickLabel = strcat(num2str([0:1/4:1]'),'\pi');
 ax.FontSize = 16;
 
 
-% %%% 2ŽŸŒ³‰æ‘œ‚Å•\Ž¦
+% %%% 2æ¬¡å…ƒç”»åƒã§è¡¨ç¤º
 % 
 % figure
 % subplot(2,2,1)
@@ -139,11 +139,11 @@ ax.FontSize = 16;
 
 
 
-% %%% ‹…–Ê‚Å•\Ž¦
-% rad = 101;      % ƒxƒNƒgƒ‹‹…‚Ì”¼Œa
-% rad2 = 100;     % ’n–Ê‚Ì”¼Œa
+% %%% çƒé¢ã§è¡¨ç¤º
+% rad = 101;      % ãƒ™ã‚¯ãƒˆãƒ«çƒã®åŠå¾„
+% rad2 = 100;     % åœ°é¢ã®åŠå¾„
 % 
-% % •—‘¬
+% % é¢¨é€Ÿ
 % wt = real(wt);      wp = real(wp);
 % tau_r = rad.*sin(theta);
 % tau_x = tau_r.*cos(phi);
@@ -153,13 +153,13 @@ ax.FontSize = 16;
 % tau_v = wp.*cos(phi) - wt.*cos(theta).*sin(phi);
 % tau_w = wt.*sin(theta);
 % 
-% % ’n–Ê
+% % åœ°é¢
 % r2 = rad2.*sin(theta);
 % x2 = r2.*cos(phi);
 % y2 = r2.*sin(phi);
 % z2 = rad2.*cos(theta);
 % 
-% % •`‰æ
+% % æç”»
 % figure
 % quiver3(tau_x,tau_y,tau_z,tau_u,tau_v,tau_w, ...
 %     'MaxHeadSize',1, ...

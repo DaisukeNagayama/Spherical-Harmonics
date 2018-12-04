@@ -15,7 +15,7 @@ fig.Color = 'black';
 
 % set font
 % list = listfonts      % available fonts
-myFontName = 'ƒƒCƒŠƒI';
+myFontName = 'ãƒ¡ã‚¤ãƒªã‚ª';
 myFontSize = 16;
 myAxisFontSize = 16;
 myFontColor = 'white';

@@ -1,7 +1,5 @@
 %% シンボリックで球面調和変換
 % 
-%
-% TODO: シンボリックで球面場の回転（回転行列）
 % 
 %%
 syms x
@@ -15,7 +13,7 @@ assume(phi >= 0 & phi <= 2*pi)
 syms Pl(x) Plm(x)
 
 %% input
-yy = sin(2*phi)*sin(3*theta);
+yy = sin(2*phi);
 N = 2;
 
 %% 回転行列
